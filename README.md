@@ -1,6 +1,6 @@
 # Energy Diagram Plotter
 
-A Python script to generate energy diagrams from Excel data. This tool visualizes states, their energies, and connections between them, producing a clean, publication-ready SVG diagram.
+A Python script to generate energy diagrams from Excel data. This tool visualizes states, their energies, and connections between them, producing a clean diagram.
 
 ---
 
@@ -10,13 +10,12 @@ A Python script to generate energy diagrams from Excel data. This tool visualize
 - **Connections**: Draw connections between states with customizable line styles (solid, dashed, dotted) and colors.
 - **Automatic Layout**: Adjusts the horizontal position of states that are too close vertically to avoid overlap.
 - **Customizable Output**: Control figure size, bar width, label offsets, and more via command-line arguments.
-- **SVG Export**: High-quality SVG output for scalability and further editing.
-
+- **Export**: SVG output by default, though .eps, .pdf, .png, etc. should work too.
 ---
 
 ## Requirements
 
-- Python 3.6+
+- Python 3.12 (might work on other versions)
 - Required libraries:
   - `pandas`
   - `matplotlib`
@@ -43,17 +42,17 @@ python energy_diagram.py [options]
 #### Arguments
 
 
-| Argument          | Type  | Default              | Description                                                                              |
-| ----------------- | ----- | -------------------- | ---------------------------------------------------------------------------------------- |
-| `-f, --file`      | str   | `data.xlsx`          | Excel file containing the state data.                                                    |
-| `--width`         | float | `16`                 | Figure width in centimeters.                                                             |
-| `--height`        | float | `10`                 | Figure height in centimeters.                                                            |
-| `-b, --bar_width` | float | `1`                  | Width of the energy bars in centimeters.                                                 |
-| `-o, --offset`    | float | `0.5`                | Vertical offset between the bar and its labels.                                          |
-| `-e, --threshold` | float | `1`                  | Energy difference threshold (in kcal/mol) below which states are considered "too close". |
-| `-s, --fontsize`  | float | `8`                  | Font size for labels.                                                                    |
-| `-d, --distance`  | float | `0.2`                | Horizontal offset for states that are too close.                                         |
-| `--output`        | str   | `energy_diagram.svg` | Output file name.                                                                        |
+| Argument          | Default              | Description                                                                              |
+| ----------------- | -------------------- | ---------------------------------------------------------------------------------------- |
+| `-f, --file`        | `data.xlsx`          | Excel file containing the state data.                                                    |
+| `--width`           | `16`                 | Figure width in centimeters.                                                             |
+| `--height`          | `10`                 | Figure height in centimeters.                                                            |
+| `-b, --bar_width`   | `1`                  | Width of the energy bars in centimeters.                                                 |
+| `-o, --offset`      | `0.5`                | Vertical offset between the bar and its labels.                                          |
+| `-e, --threshold`   | `1`                  | Energy difference threshold below which states are considered "too close". |
+| `-s, --fontsize`    | `8`                  | Font size for labels.                                                                    |
+| `-d, --distance`    | `0.2`                | Horizontal offset for states that are too close.                                         |
+| `--output`          | `energy_diagram.svg` | Output file name.                                                                        |
 
 
 #### Example
@@ -93,7 +92,7 @@ Connections between states are defined in the `Connects to` column using the fol
 
 ## Output
 
-The script generates an SVG file with the following features:
+The script generates an picture with the following features:
 
 - **No Axes**: The diagram is clean, with no ticks, labels, or borders.
 - **State Bars**: Horizontal bars representing energy levels, colored as specified.
@@ -108,22 +107,13 @@ The script generates an SVG file with the following features:
 Here is an example of what your Excel file might look like:
 
 
-| ID  | State | Energy | X   | Connects to | Color |
-| --- | ----- | ------ | --- | ----------- | ----- |
-| 1   | A     | 10.5   | 1   | 2, 3--red   | black |
-| 2   | B     | 12.0   | 2   | 1, 4        | blue  |
-| 3   | C     | 8.0    | 1   | 4.#00FF00   | green |
-| 4   | D     | 15.0   | 3   | 2--         | red   |
+| ID  | State | Energy | X   | Connects to    | Color |
+| --- | ----- | ------ | --- | -------------- | ----- |
+| 1   | A     |   0.0  | 1   | 2-blue,5--pink | black |
+| 2   | A.B   | - 3.4  | 2   | 3-blue         | blue  |
+| 3   | AB_TS |  13.5  | 3   | 4-blue         | blue  |
+| 4   | A-B   | -13.6  | 4   |                | blue  |
+| 5   | A.C   | - 6.5  | 2   | 6--pink        | pink |
+| 6   | AC_TS |  18.9  | 3   | 7--pink        | pink |
+| 7   | A-C   | - 9.3  | 4   |                | pink |
 
-
----
-
-## License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.

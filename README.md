@@ -117,3 +117,5 @@ Here is an example of what your Excel file might look like:
 | 6   | AC_TS |  18.9  | 3   | 7--pink        | pink |
 | 7   | A-C   | - 9.3  | 4   |                | pink |
 
+![Example Output](energy_diagram.svg)
+
